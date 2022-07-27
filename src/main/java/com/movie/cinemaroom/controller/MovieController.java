@@ -15,16 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/movie")
 public class MovieController {
 
-	 @Autowired
-	 private RedisTemplate<String, String> template;
-	
-	 private static final String STRING_KEY_PREFIX = "redi2read:strings:";
-	 
-	 @PostMapping("/strings")
-	 @ResponseStatus(HttpStatus.CREATED)
-	 public Map.Entry<String, String> setString(@RequestBody Map.Entry<String, String> kvp) {
-		 template.opsForValue().set(STRING_KEY_PREFIX + kvp.getKey(), kvp.getValue());
-		 return kvp; 
-	 }
 	
 }
