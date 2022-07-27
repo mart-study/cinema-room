@@ -5,3 +5,4 @@ Technology used:
 - Maven
 - REST API
 - Redis
+- JUnit5 and Mockito
