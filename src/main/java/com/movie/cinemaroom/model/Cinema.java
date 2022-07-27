@@ -1,17 +1,37 @@
 package com.movie.cinemaroom.model;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Reference;
+import org.springframework.data.redis.core.RedisHash;
+
+@RedisHash
 public class Cinema {
 
+	@Id
 	private long screenId;
+	
+	@NotNull
+	@Size(min = 25, max = 36)
 	private int maxSeats;
+	
+	@NotNull
 	private int sreenSize;
+	
+	@Reference
+	private Set<Showing> showings = new HashSet<>();
 	
 	public Cinema() {
 		
 	}
 
-	public Cinema(long screenId, int maxSeats, int sreenSize) {
-		this.screenId = screenId;
+	public Cinema(int maxSeats, int sreenSize) {
 		this.maxSeats = maxSeats;
 		this.sreenSize = sreenSize;
 	}
@@ -41,7 +61,33 @@ public class Cinema {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(maxSeats, screenId, sreenSize);
+	}
+
+	public Set<Showing> getShowings() {
+		return showings;
+	}
+
+	public void setShowings(Set<Showing> showings) {
+		this.showings = showings;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cinema other = (Cinema) obj;
+		return maxSeats == other.maxSeats && screenId == other.screenId && sreenSize == other.sreenSize;
+	}
+
+	@Override
 	public String toString() {
-		return "Cinema [screenId=" + screenId + ", maxSeats=" + maxSeats + ", sreenSize=" + sreenSize + "]";
+		return "Cinema [screenId=" + screenId + ", maxSeats=" + maxSeats + ", sreenSize=" + sreenSize + ", showings="
+				+ showings + "]";
 	}
 }
