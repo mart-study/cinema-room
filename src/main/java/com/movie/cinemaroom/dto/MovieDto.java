@@ -1,45 +1,29 @@
-package com.movie.cinemaroom.model;
+package com.movie.cinemaroom.dto;
 
 import java.util.Date;
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
+public class MovieDto {
 
-@RedisHash
-public class Movie {
-
-	@Id
 	private String id;
-	
-	@NotNull
-	@Indexed
 	private String title;
-	
-	@NotNull
 	private int runTime;
-	
-	@NotNull
 	private String rating;
-	
-	@NotNull
 	private String productionCompany;
 	
-	@NotNull
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date startDate;
 	
-	@NotNull
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 	
-	public Movie() {
+	public MovieDto() {
 		
 	}
 
-	public Movie(String title, int runTime, String rating, String productionCompany, Date startDate,
-			Date endDate) {
+	public MovieDto(String title, int runTime, String rating, String productionCompany, Date startDate, Date endDate) {
 		this.title = title;
 		this.runTime = runTime;
 		this.rating = rating;
@@ -47,7 +31,7 @@ public class Movie {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -117,7 +101,7 @@ public class Movie {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Movie other = (Movie) obj;
+		MovieDto other = (MovieDto) obj;
 		return Objects.equals(endDate, other.endDate) && Objects.equals(id, other.id)
 				&& Objects.equals(productionCompany, other.productionCompany)
 				&& Objects.equals(rating, other.rating) && runTime == other.runTime
@@ -126,7 +110,7 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", runTime=" + runTime + ", rating=" + rating
+		return "MovieDto [id=" + id + ", title=" + title + ", runTime=" + runTime + ", rating=" + rating
 				+ ", productionCompany=" + productionCompany + ", startDate=" + startDate + ", endDate=" + endDate
 				+ "]";
 	}
