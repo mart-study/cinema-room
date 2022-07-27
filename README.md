@@ -3,5 +3,5 @@
 Technology used:
 - Spring Boot
 - Maven
-- Rest API
+- REST API
 - Redis
