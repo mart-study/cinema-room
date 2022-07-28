@@ -1,5 +1,7 @@
 package com.movie.cinemaroom.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -60,6 +62,43 @@ public class MovieServiceImpl implements MovieService {
 		movie.setActive(false);
 		movieRepository.save(movie);
 		return true;
+	}
+
+	@Override
+	public MovieDto findById(String id) {
+		Optional<Movie> movieOpt = movieRepository.findById(id);
+		if (movieOpt.isEmpty()) {
+			throw new MovieNotFoundException("Movie with id: " + id + " is not found");
+		}
+		
+		MovieDto movieDto = modelMapper.map(movieOpt.get(), MovieDto.class);
+		return movieDto;
+	}
+
+	@Override
+	public List<MovieDto> findByTitle(String title) {
+		List<Movie> movieList = movieRepository.findByTitleLikeIgnoreCase("%" + title + "%");
+		List<MovieDto> movieDtoList = new ArrayList<>();
+		if (movieList != null && !movieList.isEmpty()) {
+			movieList.forEach(movie -> {
+				MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
+				movieDtoList.add(movieDto);
+			});
+		}
+		return movieDtoList;
+	}
+
+	@Override
+	public List<MovieDto> findAllActiveMovies() {
+		List<Movie> movieList = movieRepository.findByActiveTrue();
+		List<MovieDto> movieDtoList = new ArrayList<>();
+		if (movieList != null && !movieList.isEmpty()) {
+			movieList.forEach(movie -> {
+				MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
+				movieDtoList.add(movieDto);
+			});
+		}
+		return movieDtoList;
 	}
 	
 }
