@@ -27,6 +27,8 @@ public class Cinema {
 	@Reference
 	private Set<Showing> showings = new HashSet<>();
 	
+	private boolean active;
+	
 	public Cinema() {
 		
 	}
@@ -34,6 +36,7 @@ public class Cinema {
 	public Cinema(int maxSeats, int sreenSize) {
 		this.maxSeats = maxSeats;
 		this.sreenSize = sreenSize;
+		this.active = true;
 	}
 
 	public long getScreenId() {
@@ -73,6 +76,14 @@ public class Cinema {
 		this.showings = showings;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -82,12 +93,13 @@ public class Cinema {
 		if (getClass() != obj.getClass())
 			return false;
 		Cinema other = (Cinema) obj;
-		return maxSeats == other.maxSeats && screenId == other.screenId && sreenSize == other.sreenSize;
+		return maxSeats == other.maxSeats && screenId == other.screenId 
+				&& sreenSize == other.sreenSize && active == other.active;
 	}
 
 	@Override
 	public String toString() {
 		return "Cinema [screenId=" + screenId + ", maxSeats=" + maxSeats + ", sreenSize=" + sreenSize + ", showings="
-				+ showings + "]";
+				+ showings + ", active=" + active + "]";
 	}
 }

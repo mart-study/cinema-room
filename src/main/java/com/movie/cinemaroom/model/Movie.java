@@ -34,6 +34,8 @@ public class Movie {
 	@NotNull
 	private Date endDate;
 	
+	private boolean active;
+	
 	public Movie() {
 		
 	}
@@ -46,6 +48,7 @@ public class Movie {
 		this.productionCompany = productionCompany;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.active = true;
 	}
 	
 	public String getId() {
@@ -109,6 +112,14 @@ public class Movie {
 		return Objects.hash(endDate, id, productionCompany, rating, runTime, startDate, title);
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -121,13 +132,14 @@ public class Movie {
 		return Objects.equals(endDate, other.endDate) && Objects.equals(id, other.id)
 				&& Objects.equals(productionCompany, other.productionCompany)
 				&& Objects.equals(rating, other.rating) && runTime == other.runTime
-				&& Objects.equals(startDate, other.startDate) && Objects.equals(title, other.title);
+				&& Objects.equals(startDate, other.startDate) && Objects.equals(title, other.title)
+				&& active == other.active;
 	}
 
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", title=" + title + ", runTime=" + runTime + ", rating=" + rating
 				+ ", productionCompany=" + productionCompany + ", startDate=" + startDate + ", endDate=" + endDate
-				+ "]";
+				+ ", active=" + active + "]";
 	}
 }

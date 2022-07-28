@@ -25,6 +25,8 @@ public class Showing {
 	@Reference
 	private Movie movie;
 	
+	private boolean active;
+	
 	public Showing() {
 		
 	}
@@ -33,6 +35,7 @@ public class Showing {
 		this.startTime = startTime;
 		this.numSeats = numSeats;
 		this.movie = movie;
+		this.active = true;
 	}
 
 	public String getShowingId() {
@@ -72,6 +75,14 @@ public class Showing {
 		this.movie = movie;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -81,12 +92,13 @@ public class Showing {
 		if (getClass() != obj.getClass())
 			return false;
 		Showing other = (Showing) obj;
-		return numSeats == other.numSeats && Objects.equals(showingId, other.showingId) && startTime == other.startTime;
+		return numSeats == other.numSeats && Objects.equals(showingId, other.showingId) 
+				&& startTime == other.startTime && active == other.active;
 	}
 
 	@Override
 	public String toString() {
 		return "Showing [showingId=" + showingId + ", startTime=" + startTime + ", numSeats=" + numSeats + ", movie="
-				+ movie + "]";
+				+ movie + ", active=" + active + "]";
 	}
 }
