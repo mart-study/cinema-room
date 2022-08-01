@@ -77,9 +77,10 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public List<MovieDto> findByTitle(String title) {
-		List<Movie> movieList = movieRepository.findByTitleLikeIgnoreCase("%" + title + "%");
+		title = "%" + title + "%";
+		List<Movie> movieList = movieRepository.findByTitleLikeIgnoreCase(title);
 		List<MovieDto> movieDtoList = new ArrayList<>();
-		if (movieList != null && !movieList.isEmpty()) {
+		if (movieList != null) {
 			movieList.forEach(movie -> {
 				MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
 				movieDtoList.add(movieDto);
@@ -92,7 +93,7 @@ public class MovieServiceImpl implements MovieService {
 	public List<MovieDto> findAllActiveMovies() {
 		List<Movie> movieList = movieRepository.findByActiveTrue();
 		List<MovieDto> movieDtoList = new ArrayList<>();
-		if (movieList != null && !movieList.isEmpty()) {
+		if (movieList != null) {
 			movieList.forEach(movie -> {
 				MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
 				movieDtoList.add(movieDto);
