@@ -71,7 +71,7 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test save movie, expeceted success")
+	@DisplayName("Test save movie, expected success")
 	void saveMovie_success() throws ParseException {
 		MovieDto movieDto1 = movieService.save(this.movieDto);
 		assertNotNull(movieDto1);
@@ -80,7 +80,7 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test update movie, expeceted success")
+	@DisplayName("Test update movie, expected success")
 	void updateMovie_success() throws ParseException {
 		MovieDto movieDto = movieService.update(this.movieDto);
 		Movie movie = modelMapper.map(movieDto, Movie.class);
@@ -91,7 +91,7 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test update movie, expeceted failed")
+	@DisplayName("Test update movie, expected failed")
 	void updateMovie_failed() throws ParseException {
 		MovieDto movieDto = new MovieDto();
 		movieDto.setId("invalid_id");
@@ -102,13 +102,13 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test delete movie, expeceted success")
+	@DisplayName("Test delete movie, expected success")
 	void deleteMovie_success() throws ParseException {
 		movieService.deleteMovie("48d48865-e1f1-4bc2-9e2f-a32cda343c08");
 	}
 	
 	@Test
-	@DisplayName("Test delete movie, expeceted failed")
+	@DisplayName("Test delete movie, expected failed")
 	void deleteMovie_failed() throws ParseException {
 		Optional<Movie> movieOpt = Optional.empty();
 		when(movieRepository.findById("58d48865-e1f1-4bc2-9e2f-a32cda343c05")).thenReturn(movieOpt);
@@ -121,7 +121,7 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find by id, expeceted success")
+	@DisplayName("Test find by id, expected success")
 	void findById_success() {
 		MovieDto movieDto = movieService.findById("48d48865-e1f1-4bc2-9e2f-a32cda343c08");
 		assertNotNull(movieDto);
@@ -130,7 +130,7 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find by id, expeceted failed")
+	@DisplayName("Test find by id, expected failed")
 	void findById_failed() {
 		MovieNotFoundException exception = assertThrows(MovieNotFoundException.class, 
 				() -> movieService.findById("invalid_id"), "MovieNotFoundException is expected");
@@ -139,7 +139,7 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find by title, expeceted success")
+	@DisplayName("Test find by title, expected success")
 	void findByTitle_success() {
 		List<MovieDto> listMovie = movieService.findByTitle("Minions");
 		assertNotNull(listMovie);
@@ -149,7 +149,7 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find all active movies, expeceted success")
+	@DisplayName("Test find all active movies, expected success")
 	void findAllActiveMovies_success() {
 		List<MovieDto> listMovie = movieService.findAllActiveMovies();
 		assertNotNull(listMovie);

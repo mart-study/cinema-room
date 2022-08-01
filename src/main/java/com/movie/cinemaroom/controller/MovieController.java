@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +53,7 @@ public class MovieController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/{id}")
+	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<?> deleteMovie(@PathVariable String id) {
 		movieService.deleteMovie(id);
 		return new ResponseEntity<>("Movie is deleted", HttpStatus.OK);
