@@ -46,13 +46,13 @@ public class MovieControllerTest {
 		Date endDate = formatter.parse("2022-08-29");
 		this.movieDto = new MovieDto("Minions: The Rise of Gru", 87, "SU", 
 				"Illumination entertainment", startDate, endDate);
-		this.movieDto.setId("48d48865-e1f1-4bc2-9e2f-a32cda343c08");
-		when(movieService.findById("48d48865-e1f1-4bc2-9e2f-a32cda343c08")).thenReturn(movieDto);
+		this.movieDto.setId("56r48865-e1f1-4bc2-9e2f-a32cda343d08");
+		when(movieService.findById("56r48865-e1f1-4bc2-9e2f-a32cda343d08")).thenReturn(movieDto);
 	}
 	
 	@Test
-	@DisplayName("Test save book, expected success")
-	public void searchBook_success() throws Exception {
+	@DisplayName("Test save movie, expected success")
+	public void searchMovie_success() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 	    ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
@@ -69,7 +69,7 @@ public class MovieControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Test update book, expected success")
+	@DisplayName("Test update movie, expected success")
 	public void updateMovie_success() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -87,9 +87,9 @@ public class MovieControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Test delete book, expected success")
+	@DisplayName("Test delete movie, expected success")
 	public void deleteMovie_success() throws Exception {
-		mockMvc.perform(delete("/movie/48d48865-e1f1-4bc2-9e2f-a32cda343c08")
+		mockMvc.perform(delete("/movie/56r48865-e1f1-4bc2-9e2f-a32cda343d08")
 				.accept(MediaType.APPLICATION_JSON_VALUE))
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 		.andExpect(status().isOk())
@@ -98,13 +98,22 @@ public class MovieControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Test find by id book, expected success")
+	@DisplayName("Test find by id movie, expected success")
 	public void getMovieById_success() throws Exception {
-		mockMvc.perform(get("/movie/48d48865-e1f1-4bc2-9e2f-a32cda343c08")
+		mockMvc.perform(get("/movie/56r48865-e1f1-4bc2-9e2f-a32cda343d08")
 				.accept(MediaType.APPLICATION_JSON_VALUE))
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 		.andExpect(status().isOk())
-		.andExpect(content().string("Movie is deleted"))
+		.andExpect(content().json("{\r\n"
+				+ "    \"id\": \"56r48865-e1f1-4bc2-9e2f-a32cda343d08\",\r\n"
+				+ "    \"title\": \"Minions: The Rise of Gru\",\r\n"
+				+ "    \"runTime\": 87,\r\n"
+				+ "    \"rating\": \"SU\",\r\n"
+				+ "    \"productionCompany\": \"Illumination entertainment\",\r\n"
+				+ "    \"startDate\": \"2022-06-28\",\r\n"
+				+ "    \"endDate\": \"2022-08-28\",\r\n"
+				+ "    \"active\": true\r\n"
+				+ "}"))
 		.andDo(print());
 	}
 	

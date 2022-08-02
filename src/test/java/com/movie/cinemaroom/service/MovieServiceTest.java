@@ -139,16 +139,6 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find by title, expected success")
-	void findByTitle_success() {
-		List<MovieDto> listMovie = movieService.findByTitle("Minions");
-		assertNotNull(listMovie);
-		assertEquals(1, listMovie.size());
-		assertNotEquals(0, listMovie.size());
-		verify(movieRepository, times(1)).findByTitleLikeIgnoreCase("%Minions%");
-	}
-	
-	@Test
 	@DisplayName("Test find all active movies, expected success")
 	void findAllActiveMovies_success() {
 		List<MovieDto> listMovie = movieService.findAllActiveMovies();

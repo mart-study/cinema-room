@@ -26,6 +26,7 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public MovieDto save(MovieDto movieDto) {
 		Movie movie = modelMapper.map(movieDto, Movie.class);
+		movie.setActive(true);
 		movie = movieRepository.save(movie);
 		movieDto = modelMapper.map(movie, MovieDto.class);
 		return movieDto;
@@ -73,20 +74,6 @@ public class MovieServiceImpl implements MovieService {
 		
 		MovieDto movieDto = modelMapper.map(movieOpt.get(), MovieDto.class);
 		return movieDto;
-	}
-
-	@Override
-	public List<MovieDto> findByTitle(String title) {
-		title = "%" + title + "%";
-		List<Movie> movieList = movieRepository.findByTitleLikeIgnoreCase(title);
-		List<MovieDto> movieDtoList = new ArrayList<>();
-		if (movieList != null) {
-			movieList.forEach(movie -> {
-				MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
-				movieDtoList.add(movieDto);
-			});
-		}
-		return movieDtoList;
 	}
 
 	@Override
