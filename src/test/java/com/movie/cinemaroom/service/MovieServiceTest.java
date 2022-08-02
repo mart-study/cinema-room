@@ -67,7 +67,7 @@ public class MovieServiceTest {
 		List<Movie> movieList = new ArrayList<>();
 		movieList.add(this.movie);
 		when(movieRepository.findByTitleLikeIgnoreCase("%Minions%")).thenReturn(movieList);
-		when(movieRepository.findByActiveIsTrue()).thenReturn(movieList);
+		when(movieRepository.findAll()).thenReturn(movieList);
 	}
 	
 	@Test
@@ -139,13 +139,13 @@ public class MovieServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find all active movies, expected success")
+	@DisplayName("Test find all movies, expected success")
 	void findAllActiveMovies_success() {
-		List<MovieDto> listMovie = movieService.findAllActiveMovies();
+		List<MovieDto> listMovie = movieService.findAll();
 		assertNotNull(listMovie);
 		assertEquals(1, listMovie.size());
 		assertNotEquals(0, listMovie.size());
-		verify(movieRepository, times(1)).findByActiveIsTrue();
+		verify(movieRepository, times(1)).findAll();
 	}
 	
 }

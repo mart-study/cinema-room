@@ -74,12 +74,12 @@ public class MovieController {
 	}
 	
 	/**
-	 * Get active movies / find all movie with active status
+	 * Get all movies
 	 * @return
 	 */
-	@GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> getAllActiveMovies() {
-		List<MovieDto> movieList = movieService.findAllActiveMovies();
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> getAllMovies() {
+		List<MovieDto> movieList = movieService.findAll();
 		return new ResponseEntity<>(movieList, HttpStatus.OK);
 	}
 }

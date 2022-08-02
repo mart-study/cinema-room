@@ -117,4 +117,13 @@ public class MovieControllerTest {
 		.andDo(print());
 	}
 	
+	@Test
+	@DisplayName("Test find by id movie, expected success")
+	public void getAllMovies_success() throws Exception {
+		mockMvc.perform(get("/movie")
+				.accept(MediaType.APPLICATION_JSON_VALUE))
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+		.andExpect(status().isOk())
+		.andDo(print());
+	}
 }
