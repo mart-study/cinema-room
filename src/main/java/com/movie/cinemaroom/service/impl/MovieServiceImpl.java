@@ -78,7 +78,7 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public List<MovieDto> findAllActiveMovies() {
-		List<Movie> movieList = movieRepository.findByActiveTrue();
+		List<Movie> movieList = movieRepository.findByActiveIsTrue();
 		List<MovieDto> movieDtoList = new ArrayList<>();
 		if (movieList != null) {
 			movieList.forEach(movie -> {

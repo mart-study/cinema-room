@@ -110,8 +110,8 @@ public class MovieControllerTest {
 				+ "    \"runTime\": 87,\r\n"
 				+ "    \"rating\": \"SU\",\r\n"
 				+ "    \"productionCompany\": \"Illumination entertainment\",\r\n"
-				+ "    \"startDate\": \"2022-06-28\",\r\n"
-				+ "    \"endDate\": \"2022-08-28\",\r\n"
+				+ "    \"startDate\": \"2022-06-29\",\r\n"
+				+ "    \"endDate\": \"2022-08-29\",\r\n"
 				+ "    \"active\": true\r\n"
 				+ "}"))
 		.andDo(print());

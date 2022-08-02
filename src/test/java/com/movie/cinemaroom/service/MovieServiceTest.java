@@ -67,7 +67,7 @@ public class MovieServiceTest {
 		List<Movie> movieList = new ArrayList<>();
 		movieList.add(this.movie);
 		when(movieRepository.findByTitleLikeIgnoreCase("%Minions%")).thenReturn(movieList);
-		when(movieRepository.findByActiveTrue()).thenReturn(movieList);
+		when(movieRepository.findByActiveIsTrue()).thenReturn(movieList);
 	}
 	
 	@Test
@@ -145,7 +145,7 @@ public class MovieServiceTest {
 		assertNotNull(listMovie);
 		assertEquals(1, listMovie.size());
 		assertNotEquals(0, listMovie.size());
-		verify(movieRepository, times(1)).findByActiveTrue();
+		verify(movieRepository, times(1)).findByActiveIsTrue();
 	}
 	
 }

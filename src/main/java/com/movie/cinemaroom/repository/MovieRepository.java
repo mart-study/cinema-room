@@ -10,6 +10,6 @@ import com.movie.cinemaroom.model.Movie;
 @Repository
 public interface MovieRepository extends PagingAndSortingRepository<Movie, String> {
 
-	public List<Movie> findByActiveTrue();
+	public List<Movie> findByActiveIsTrue();
 	public List<Movie> findByTitleLikeIgnoreCase(String title);
 }
