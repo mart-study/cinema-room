@@ -1,41 +1,26 @@
-package com.movie.cinemaroom.model;
+package com.movie.cinemaroom.dto;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import com.movie.cinemaroom.model.Showing;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Reference;
-import org.springframework.data.redis.core.RedisHash;
+public class CinemaDto {
 
-@RedisHash
-public class Cinema {
-
-	@Id
 	private String screenId;
-	
-	@NotNull
-	@Size(min = 25, max = 36)
 	private int maxSeats;
-	
-	@NotNull
 	private int sreenSize;
-	
-	@Reference
-	private Set<Showing> showings = new HashSet<>();
-	
+	private Set<Showing> showings;
 	private boolean active;
 	
-	public Cinema() {
+	public CinemaDto() {
 		
 	}
 
-	public Cinema(int maxSeats, int sreenSize) {
+	public CinemaDto(int maxSeats, int sreenSize, Set<Showing> showings) {
 		this.maxSeats = maxSeats;
 		this.sreenSize = sreenSize;
+		this.showings = showings;
 		this.active = true;
 	}
 
@@ -63,11 +48,6 @@ public class Cinema {
 		this.sreenSize = sreenSize;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(maxSeats, screenId, sreenSize);
-	}
-
 	public Set<Showing> getShowings() {
 		return showings;
 	}
@@ -85,6 +65,11 @@ public class Cinema {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(active, maxSeats, screenId, showings, sreenSize);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -92,14 +77,14 @@ public class Cinema {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cinema other = (Cinema) obj;
-		return maxSeats == other.maxSeats && screenId == other.screenId 
-				&& sreenSize == other.sreenSize && active == other.active;
+		CinemaDto other = (CinemaDto) obj;
+		return active == other.active && maxSeats == other.maxSeats && screenId == other.screenId
+				&& Objects.equals(showings, other.showings) && sreenSize == other.sreenSize;
 	}
 
 	@Override
 	public String toString() {
-		return "Cinema [screenId=" + screenId + ", maxSeats=" + maxSeats + ", sreenSize=" + sreenSize + ", showings="
+		return "CinemaDto [screenId=" + screenId + ", maxSeats=" + maxSeats + ", sreenSize=" + sreenSize + ", showings="
 				+ showings + ", active=" + active + "]";
 	}
 }
