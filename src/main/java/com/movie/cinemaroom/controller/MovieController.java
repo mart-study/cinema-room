@@ -2,6 +2,8 @@ package com.movie.cinemaroom.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,7 +33,7 @@ public class MovieController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> saveMovie(@RequestBody MovieDto movieDto) {
+	ResponseEntity<?> saveMovie(@Valid @RequestBody MovieDto movieDto) {
 		movieService.save(movieDto);
 		return new ResponseEntity<>("Movie is created", HttpStatus.CREATED);
 	}
@@ -43,7 +45,10 @@ public class MovieController {
 	 */
 	@PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> updateMovie(@RequestBody MovieDto movieDto) {
+	ResponseEntity<?> updateMovie(@Valid @RequestBody MovieDto movieDto) {
+		if (movieDto.getId() == null || movieDto.getId().isEmpty()) {
+			return new ResponseEntity<>("Movie id is required", HttpStatus.NOT_ACCEPTABLE);
+		}
 		movieService.update(movieDto);
 		return new ResponseEntity<>("Movie is updated", HttpStatus.OK);
 	}
@@ -55,7 +60,10 @@ public class MovieController {
 	 */
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<?> deleteMovie(@PathVariable String id) {
-		movieService.deleteMovie(id);
+		if (id == null || id.isEmpty()) {
+			return new ResponseEntity<>("Movie id is required", HttpStatus.NOT_ACCEPTABLE);
+		}
+		movieService.delete(id);
 		return new ResponseEntity<>("Movie is deleted", HttpStatus.OK);
 	}
 	

@@ -3,14 +3,23 @@ package com.movie.cinemaroom.dto;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MovieDto {
 
 	private String id;
+	
+	@NotBlank(message = "Movie title is empty.")
 	private String title;
+	
 	private int runTime;
+	
+	@NotBlank(message = "Movie rating is empty.")
 	private String rating;
+	
+	@NotBlank(message = "Movie production company is empty.")
 	private String productionCompany;
 	
 	@JsonFormat(pattern="yyyy-MM-dd")

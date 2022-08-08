@@ -38,5 +38,5 @@ public interface MovieService {
 	 * @param id
 	 * @return
 	 */
-	public boolean deleteMovie(String id);
+	public boolean delete(String id);
 }

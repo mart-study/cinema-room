@@ -104,7 +104,7 @@ public class MovieServiceTest {
 	@Test
 	@DisplayName("Test delete movie, expected success")
 	void deleteMovie_success() throws ParseException {
-		movieService.deleteMovie("48d48865-e1f1-4bc2-9e2f-a32cda343c08");
+		movieService.delete("48d48865-e1f1-4bc2-9e2f-a32cda343c08");
 	}
 	
 	@Test
@@ -114,7 +114,7 @@ public class MovieServiceTest {
 		when(movieRepository.findById("58d48865-e1f1-4bc2-9e2f-a32cda343c05")).thenReturn(movieOpt);
 		
 		MovieNotFoundException exception = assertThrows(MovieNotFoundException.class, 
-				() -> movieService.deleteMovie("58d48865-e1f1-4bc2-9e2f-a32cda343c05"),
+				() -> movieService.delete("58d48865-e1f1-4bc2-9e2f-a32cda343c05"),
 				"MovieNotFoundException is expected");
 	
 		assertEquals("Movie with id: 58d48865-e1f1-4bc2-9e2f-a32cda343c05 is not found", exception.getMessage());

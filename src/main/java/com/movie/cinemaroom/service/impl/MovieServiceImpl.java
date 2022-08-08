@@ -53,7 +53,7 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public boolean deleteMovie(String id) {
+	public boolean delete(String id) {
 		Optional<Movie> movieOpt = movieRepository.findById(id);
 		if (movieOpt.isEmpty()) {
 			throw new MovieNotFoundException("Movie with id: " + id + " is not found");
