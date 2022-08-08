@@ -78,7 +78,7 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public List<MovieDto> findAll() {
-		List<Movie> movieList = movieRepository.findAll();
+		Iterable<Movie> movieList = movieRepository.findAll();
 		List<MovieDto> movieDtoList = new ArrayList<>();
 		if (movieList != null) {
 			movieList.forEach(movie -> {
