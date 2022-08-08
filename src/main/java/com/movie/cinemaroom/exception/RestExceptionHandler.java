@@ -10,9 +10,10 @@ import com.movie.cinemaroom.dto.message.ErrorMessage;
 @ControllerAdvice
 public class RestExceptionHandler {
 
-	@ExceptionHandler(MovieNotFoundException.class)
-	public ResponseEntity<ErrorMessage> movieIdNotFoundException(MovieNotFoundException exception) {
+	@ExceptionHandler({MovieNotFoundException.class, CinemaNotFoundException.class})
+	public ResponseEntity<ErrorMessage> idNotFoundException(RuntimeException exception) {
 		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage());
 		return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
 	}
+	
 }
