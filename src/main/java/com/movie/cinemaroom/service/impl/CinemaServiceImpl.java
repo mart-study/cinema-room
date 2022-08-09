@@ -36,7 +36,7 @@ public class CinemaServiceImpl implements CinemaService {
 	public CinemaDto update(CinemaDto cinemaDto) {
 		Optional<Cinema> cinemaOpt = cinemaRepository.findById(cinemaDto.getScreenId());
 		if (cinemaOpt.isEmpty()) {
-			throw new CinemaNotFoundException("Cinema with screen id: " + cinemaDto.getScreenId() + "is not found.");
+			throw new CinemaNotFoundException("Cinema with screen id: " + cinemaDto.getScreenId() + " is not found.");
 		}
 		
 		Cinema cinema = cinemaOpt.get();
@@ -52,7 +52,7 @@ public class CinemaServiceImpl implements CinemaService {
 	public CinemaDto findById(String id) {
 		Optional<Cinema> cinemaOpt = cinemaRepository.findById(id);
 		if (cinemaOpt.isEmpty()) {
-			throw new CinemaNotFoundException("Cinema with screen id: " + id + "is not found.");
+			throw new CinemaNotFoundException("Cinema with screen id: " + id + " is not found.");
 		}
 		CinemaDto cinemaDto = modelMapper.map(cinemaOpt.get(), CinemaDto.class);
 		return cinemaDto;
@@ -76,7 +76,7 @@ public class CinemaServiceImpl implements CinemaService {
 	public void delete(String id) {
 		Optional<Cinema> cinemaOpt = cinemaRepository.findById(id);
 		if (cinemaOpt.isEmpty()) {
-			throw new CinemaNotFoundException("Cinema with screen id: " + id + "is not found.");
+			throw new CinemaNotFoundException("Cinema with screen id: " + id + " is not found.");
 		}
 		
 		Cinema cinema = cinemaOpt.get();

@@ -139,7 +139,7 @@ public class MovieServiceTest {
 	
 	@Test
 	@DisplayName("Test find all movies, expected success")
-	void findAllActiveMovies_success() {
+	void findAllMovies_success() {
 		List<MovieDto> listMovie = movieService.findAll();
 		assertNotNull(listMovie);
 		assertEquals(1, listMovie.size());
