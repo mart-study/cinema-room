@@ -13,8 +13,8 @@ public class RestExceptionHandler {
 
 	@ExceptionHandler({MovieNotFoundException.class, CinemaNotFoundException.class})
 	public ResponseEntity<ErrorMessage> idNotFoundException(RuntimeException exception) {
-		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage());
-		return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+		ErrorMessage message = new ErrorMessage(HttpStatus.NO_CONTENT.value(), exception.getMessage());
+		return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -24,8 +24,8 @@ public class RestExceptionHandler {
 			String errorFieldMessage = error.getDefaultMessage();
 			errorMessage.append(errorFieldMessage + " ");
 		});
-		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(), errorMessage.toString());
-		return new ResponseEntity<>(message, HttpStatus.NOT_ACCEPTABLE);
+		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), errorMessage.toString());
+		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 	}
 	
 }
