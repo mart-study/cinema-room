@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,7 +53,7 @@ public class MovieControllerTest {
 	
 	@Test
 	@DisplayName("Test save movie, expected success")
-	public void searchMovie_success() throws Exception {
+	public void saveMovie_success() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 	    ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
@@ -76,7 +77,7 @@ public class MovieControllerTest {
 	    ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
 	    String requestJson = objectWriter.writeValueAsString(this.movieDto);
 	    
-		mockMvc.perform(post("/movie/update")
+		mockMvc.perform(put("/movie")
 				.accept(MediaType.APPLICATION_JSON_VALUE)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.content(requestJson))
@@ -110,15 +111,15 @@ public class MovieControllerTest {
 				+ "    \"runTime\": 87,\r\n"
 				+ "    \"rating\": \"SU\",\r\n"
 				+ "    \"productionCompany\": \"Illumination entertainment\",\r\n"
-				+ "    \"startDate\": \"2022-06-29\",\r\n"
-				+ "    \"endDate\": \"2022-08-29\",\r\n"
+				+ "    \"startDate\": \"2022-06-28\",\r\n"
+				+ "    \"endDate\": \"2022-08-28\",\r\n"
 				+ "    \"active\": true\r\n"
 				+ "}"))
 		.andDo(print());
 	}
 	
 	@Test
-	@DisplayName("Test find by id movie, expected success")
+	@DisplayName("Test find all movie, expected success")
 	public void getAllMovies_success() throws Exception {
 		mockMvc.perform(get("/movie")
 				.accept(MediaType.APPLICATION_JSON_VALUE))

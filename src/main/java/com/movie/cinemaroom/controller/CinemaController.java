@@ -39,7 +39,7 @@ public class CinemaController {
 			return new ResponseEntity<>("Cinema screen id is required", HttpStatus.NOT_ACCEPTABLE);
 		}
 		cinemaService.update(cinemaDto);
-		return new ResponseEntity<>("Cinema is updated", HttpStatus.CREATED);
+		return new ResponseEntity<>("Cinema is updated", HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
