@@ -66,7 +66,6 @@ public class MovieServiceTest {
 		
 		List<Movie> movieList = new ArrayList<>();
 		movieList.add(this.movie);
-		when(movieRepository.findByTitleLikeIgnoreCase("%Minions%")).thenReturn(movieList);
 		when(movieRepository.findAll()).thenReturn(movieList);
 	}
 	
