@@ -16,12 +16,9 @@ public class ShowingDto {
 		
 	}
 	
-	public ShowingDto(String showingId, long startTime, int numSeats, Movie movie, boolean active) {
-		this.showingId = showingId;
+	public ShowingDto(long startTime, int numSeats) {
 		this.startTime = startTime;
 		this.numSeats = numSeats;
-		this.movie = movie;
-		this.active = active;
 	}
 
 	public String getShowingId() {
