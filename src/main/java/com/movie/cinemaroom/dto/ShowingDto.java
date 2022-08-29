@@ -19,6 +19,7 @@ public class ShowingDto {
 	public ShowingDto(long startTime, int numSeats) {
 		this.startTime = startTime;
 		this.numSeats = numSeats;
+		this.active = true;
 	}
 
 	public String getShowingId() {
