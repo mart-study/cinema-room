@@ -35,7 +35,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.movie.cinemaroom.dto.MovieDto;
 import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.exception.MovieNotFoundException;
-import com.movie.cinemaroom.model.Cinema;
 import com.movie.cinemaroom.model.Movie;
 import com.movie.cinemaroom.repository.MovieRepository;
 import com.movie.cinemaroom.service.impl.MovieServiceImpl;

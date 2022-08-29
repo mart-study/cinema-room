@@ -6,8 +6,12 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.dto.ShowingDto;
 import com.movie.cinemaroom.exception.ShowingNotFoundException;
 import com.movie.cinemaroom.model.Showing;
@@ -59,18 +63,22 @@ public class ShowingServiceImpl implements ShowingService {
 	}
 
 	@Override
-	public List<ShowingDto> findAll() {
-		Iterable<Showing> showingList = showingRepository.findAll();
+	public PagingResultDto findAll(int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		Page<Showing> showingPagedResult = showingRepository.findAll(paging);
 		List<ShowingDto> showingDtoList = new ArrayList<>();
 		
-		if (showingList != null) {
+		if (showingPagedResult.hasContent()) {
+			List<Showing> showingList = showingPagedResult.getContent();
 			showingList.forEach(showing -> {
 				ShowingDto showingDto = modelMapper.map(showing, ShowingDto.class);
 				showingDtoList.add(showingDto);
-			});
+			});		
 		}
 		
-		return showingDtoList;
+		PagingResultDto pagingResult = new PagingResultDto(showingDtoList, showingPagedResult.getNumberOfElements(),
+				showingPagedResult.getNumber(), showingPagedResult.getTotalPages(), showingPagedResult.getTotalElements());
+		return pagingResult;
 	}
 
 	@Override

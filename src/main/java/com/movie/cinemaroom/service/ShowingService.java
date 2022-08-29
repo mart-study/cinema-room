@@ -1,7 +1,6 @@
 package com.movie.cinemaroom.service;
 
-import java.util.List;
-
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.dto.ShowingDto;
 
 public interface ShowingService {
@@ -28,10 +27,12 @@ public interface ShowingService {
 	public ShowingDto findById(String id);
 	
 	/**
-	 * Find all showings
+	 * Get all showings using pagination
+	 * @param page
+	 * @param size
 	 * @return
 	 */
-	public List<ShowingDto> findAll();
+	public PagingResultDto findAll(int page, int size);
 	
 	/**
 	 * Delete showing by id

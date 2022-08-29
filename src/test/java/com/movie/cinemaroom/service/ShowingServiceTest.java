@@ -23,8 +23,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.dto.ShowingDto;
 import com.movie.cinemaroom.exception.ShowingNotFoundException;
 import com.movie.cinemaroom.model.Showing;
@@ -59,7 +64,9 @@ public class ShowingServiceTest {
 		
 		List<Showing> showingList = new ArrayList<>();
 		showingList.add(this.showing);
-		when(showingRepository.findAll()).thenReturn(showingList);
+		Pageable paging = PageRequest.of(0, 10);
+		Page<Showing> showingPagedResult = new PageImpl<>(showingList, paging, showingList.size());
+		when(showingRepository.findAll(paging)).thenReturn(showingPagedResult);
 	}
 	
 	@Test
@@ -135,10 +142,11 @@ public class ShowingServiceTest {
 	@Test
 	@DisplayName("Test find all showings, expected success")
 	void findAllShowings_success() {
-		List<ShowingDto> showingList = showingService.findAll();
+		PagingResultDto showingList = showingService.findAll(0, 10);
 		assertNotNull(showingList);
-		assertEquals(1, showingList.size());
-		assertNotEquals(0, showingList.size());
-		verify(showingRepository, times(1)).findAll();
+		assertEquals(1, showingList.getPageElements());
+		assertNotEquals(0, showingList.getTotalElements());
+		Pageable paging = PageRequest.of(0, 10);
+		verify(showingRepository, times(1)).findAll(paging);
 	}
 }
