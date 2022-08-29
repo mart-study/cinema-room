@@ -1,7 +1,5 @@
 package com.movie.cinemaroom.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movie.cinemaroom.dto.CinemaDto;
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.service.CinemaService;
 
 @RestController
@@ -25,6 +25,11 @@ public class CinemaController {
 	@Autowired
 	private CinemaService cinemaService;
 	
+	/**
+	 * Save new cinema
+	 * @param cinemaDto
+	 * @return
+	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<?> saveCinema(@RequestBody CinemaDto cinemaDto) {
@@ -32,6 +37,11 @@ public class CinemaController {
 		return new ResponseEntity<>("Cinema is created", HttpStatus.CREATED);
 	}
 	
+	/**
+	 * Update existing cinema
+	 * @param cinemaDto
+	 * @return
+	 */
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<?> updateCinema(@RequestBody CinemaDto cinemaDto) {
@@ -42,6 +52,11 @@ public class CinemaController {
 		return new ResponseEntity<>("Cinema is updated", HttpStatus.OK);
 	}
 	
+	/**
+	 * Find cinema by id
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<?> getCinemaById(@PathVariable String id) {
 		if (id == null || id.isEmpty()) {
@@ -51,12 +66,24 @@ public class CinemaController {
 		return new ResponseEntity<>(cinemaDto, HttpStatus.OK);
 	}
 	
+	/**
+	 * Get all cinemas with pagination
+	 * @param page
+	 * @param size
+	 * @return
+	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> getAllCinemas() {
-		List<CinemaDto> cinemaList = cinemaService.findAll();
-		return new ResponseEntity<>(cinemaList, HttpStatus.OK);
+	ResponseEntity<?> getAllCinemas(@RequestParam(defaultValue = "0") int page, 
+			@RequestParam(defaultValue = "10") int size) {
+		PagingResultDto pagingResult = cinemaService.findAll(page, size);
+		return new ResponseEntity<>(pagingResult, HttpStatus.OK);
 	}
 	
+	/**
+	 * Delete cinema by id
+	 * @param id
+	 * @return
+	 */
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<?> deleteCinema(@PathVariable String id) {
 		if (id == null || id.isEmpty()) {

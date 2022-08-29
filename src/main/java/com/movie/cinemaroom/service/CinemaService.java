@@ -1,8 +1,7 @@
 package com.movie.cinemaroom.service;
 
-import java.util.List;
-
 import com.movie.cinemaroom.dto.CinemaDto;
+import com.movie.cinemaroom.dto.PagingResultDto;
 
 public interface CinemaService {
 
@@ -28,10 +27,12 @@ public interface CinemaService {
 	public CinemaDto findById(String id);
 	
 	/**
-	 * Find all cinemas
+	 * Get all cinemas with pagination
+	 * @param page
+	 * @param size
 	 * @return
 	 */
-	public List<CinemaDto> findAll();
+	public PagingResultDto findAll(int page, int size);
 	
 	/**
 	 * Delete cinema by id

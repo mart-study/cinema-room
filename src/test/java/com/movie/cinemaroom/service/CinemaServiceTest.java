@@ -24,9 +24,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.movie.cinemaroom.dto.CinemaDto;
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.exception.CinemaNotFoundException;
 import com.movie.cinemaroom.model.Cinema;
 import com.movie.cinemaroom.repository.CinemaRepository;
@@ -60,7 +65,9 @@ public class CinemaServiceTest {
 		
 		List<Cinema> cinemaList = new ArrayList<>();
 		cinemaList.add(this.cinema);
-		when(cinemaRepository.findAll()).thenReturn(cinemaList);	
+		Pageable paging = PageRequest.of(0, 10);
+		Page<Cinema> cinemaPagedResult = new PageImpl<>(cinemaList, paging, cinemaList.size());
+		when(cinemaRepository.findAll(paging)).thenReturn(cinemaPagedResult);	
 	}
 	
 	@Test
@@ -117,11 +124,12 @@ public class CinemaServiceTest {
 	@Test
 	@DisplayName("Test find all cinema, expected success")
 	void findAllCinemas_success() {
-		List<CinemaDto> cinemaList = cinemaService.findAll();
+		PagingResultDto cinemaList = cinemaService.findAll(0, 10);
 		assertNotNull(cinemaList);
-		assertEquals(1, cinemaList.size());
-		assertNotEquals(0, cinemaList.size());
-		verify(cinemaRepository, times(1)).findAll();
+		assertEquals(1, cinemaList.getPageElements());
+		assertNotEquals(0, cinemaList.getTotalElements());
+		Pageable paging = PageRequest.of(0, 10);
+		verify(cinemaRepository, times(1)).findAll(paging);
 	}
 	
 	@Test
