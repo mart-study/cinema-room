@@ -10,10 +10,8 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
-import org.springframework.validation.annotation.Validated;
 
 @RedisHash
-@Validated
 public class Movie {
 
 	@Id

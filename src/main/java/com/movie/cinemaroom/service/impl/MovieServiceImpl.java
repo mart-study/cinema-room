@@ -88,5 +88,16 @@ public class MovieServiceImpl implements MovieService {
 		}
 		return movieDtoList;
 	}
+
+	@Override
+	public MovieDto findByTitle(String title) {
+		Optional<Movie> movieOpt = movieRepository.findFirstByTitle(title);
+		if (movieOpt.isEmpty()) {
+			throw new MovieNotFoundException("Movie with title: " + title + " is not found");
+		}
+		
+		MovieDto movieDto = modelMapper.map(movieOpt.get(), MovieDto.class);
+		return movieDto;
+	}
 	
 }

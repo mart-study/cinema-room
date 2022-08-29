@@ -28,6 +28,13 @@ public interface MovieService {
 	public MovieDto findById(String id);
 	
 	/**
+	 * Find movie by title (get first result)
+	 * @param title
+	 * @return
+	 */
+	public MovieDto findByTitle(String title);
+	
+	/**
 	 * Find all movies
 	 * @return
 	 */

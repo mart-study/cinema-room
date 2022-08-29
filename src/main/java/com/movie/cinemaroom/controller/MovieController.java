@@ -83,6 +83,20 @@ public class MovieController {
 	}
 	
 	/**
+	 * Find movie by title (get first result)
+	 * @param title
+	 * @return
+	 */
+	@GetMapping(value = "/get/{title}/title", produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> getMovieByTitle(@PathVariable String title) {
+		if (title == null || title.isEmpty()) {
+			return new ResponseEntity<>("Movie title is required", HttpStatus.NOT_ACCEPTABLE);
+		}
+		MovieDto movieDto = movieService.findByTitle(title);
+		return new ResponseEntity<>(movieDto, HttpStatus.OK);
+	}
+	
+	/**
 	 * Get all movies
 	 * @return
 	 */

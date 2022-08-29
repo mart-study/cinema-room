@@ -9,10 +9,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Reference;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.validation.annotation.Validated;
 
 @RedisHash
-@Validated
 public class Showing {
 
 	@Id
