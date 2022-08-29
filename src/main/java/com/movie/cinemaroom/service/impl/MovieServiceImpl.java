@@ -6,9 +6,13 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.movie.cinemaroom.dto.MovieDto;
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.exception.MovieNotFoundException;
 import com.movie.cinemaroom.model.Movie;
 import com.movie.cinemaroom.repository.MovieRepository;
@@ -77,16 +81,22 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public List<MovieDto> findAll() {
-		Iterable<Movie> movieList = movieRepository.findAll();
+	public PagingResultDto findAll(int page, int size) {
+		Pageable paging = PageRequest.of(page, size);
+		Page<Movie> moviePagedResult = movieRepository.findAll(paging);
 		List<MovieDto> movieDtoList = new ArrayList<>();
-		if (movieList != null) {
+		
+		if (moviePagedResult.hasContent()) {
+			List<Movie> movieList = moviePagedResult.getContent();
 			movieList.forEach(movie -> {
 				MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
 				movieDtoList.add(movieDto);
 			});
 		}
-		return movieDtoList;
+		
+		PagingResultDto pagingResult = new PagingResultDto(movieDtoList, moviePagedResult.getNumberOfElements(),
+				moviePagedResult.getNumber(), moviePagedResult.getTotalPages(), moviePagedResult.getTotalElements());
+		return pagingResult;
 	}
 
 	@Override

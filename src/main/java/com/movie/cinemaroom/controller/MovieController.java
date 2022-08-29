@@ -1,7 +1,5 @@
 package com.movie.cinemaroom.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movie.cinemaroom.dto.MovieDto;
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.service.MovieService;
 
 @RestController
@@ -97,12 +97,15 @@ public class MovieController {
 	}
 	
 	/**
-	 * Get all movies
+	 * Get all movies using pagination
+	 * @param page
+	 * @param size
 	 * @return
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> getAllMovies() {
-		List<MovieDto> movieList = movieService.findAll();
-		return new ResponseEntity<>(movieList, HttpStatus.OK);
+	ResponseEntity<?> getAllMovies(@RequestParam(defaultValue = "0") int page, 
+			@RequestParam(defaultValue = "10") int size) {
+		PagingResultDto pagingResult = movieService.findAll(page, size);
+		return new ResponseEntity<>(pagingResult, HttpStatus.OK);
 	}
 }

@@ -26,10 +26,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.movie.cinemaroom.dto.MovieDto;
+import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.exception.MovieNotFoundException;
+import com.movie.cinemaroom.model.Cinema;
 import com.movie.cinemaroom.model.Movie;
 import com.movie.cinemaroom.repository.MovieRepository;
 import com.movie.cinemaroom.service.impl.MovieServiceImpl;
@@ -66,7 +72,9 @@ public class MovieServiceTest {
 		
 		List<Movie> movieList = new ArrayList<>();
 		movieList.add(this.movie);
-		when(movieRepository.findAll()).thenReturn(movieList);
+		Pageable paging = PageRequest.of(0, 10);
+		Page<Movie> moviePagedResult = new PageImpl<>(movieList, paging, movieList.size());
+		when(movieRepository.findAll(paging)).thenReturn(moviePagedResult);
 	}
 	
 	@Test
@@ -140,11 +148,12 @@ public class MovieServiceTest {
 	@Test
 	@DisplayName("Test find all movies, expected success")
 	void findAllMovies_success() {
-		List<MovieDto> listMovie = movieService.findAll();
+		PagingResultDto listMovie = movieService.findAll(0, 10);
 		assertNotNull(listMovie);
-		assertEquals(1, listMovie.size());
-		assertNotEquals(0, listMovie.size());
-		verify(movieRepository, times(1)).findAll();
+		assertEquals(1, listMovie.getPageElements());
+		assertNotEquals(0, listMovie.getTotalElements());
+		Pageable paging = PageRequest.of(0, 10);
+		verify(movieRepository, times(1)).findAll(paging);
 	}
 	
 }
