@@ -3,12 +3,25 @@ package com.movie.cinemaroom.dto;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.annotation.Validated;
+
 import com.movie.cinemaroom.model.Showing;
 
+@Validated
 public class CinemaDto {
 
 	private String screenId;
+	
+	@NotNull
+	@Min(25)
+	@Max(36)
 	private int maxSeats;
+	
+	@NotNull
 	private int sreenSize;
 	private Set<Showing> showings;
 	private boolean active;

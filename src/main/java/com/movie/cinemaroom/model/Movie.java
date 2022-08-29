@@ -3,29 +3,34 @@ package com.movie.cinemaroom.model;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
+import org.springframework.validation.annotation.Validated;
 
 @RedisHash
+@Validated
 public class Movie {
 
 	@Id
 	private String id;
 	
-	@NotNull
+	@NotBlank
 	@Indexed
+	@Size(min = 1, max = 100)
 	private String title;
 	
 	@NotNull
 	private int runTime;
 	
-	@NotNull
+	@NotBlank
 	private String rating;
 	
-	@NotNull
+	@NotBlank
 	private String productionCompany;
 	
 	@NotNull

@@ -4,8 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Reference;
@@ -18,7 +19,8 @@ public class Cinema {
 	private String screenId;
 	
 	@NotNull
-	@Size(min = 25, max = 36)
+	@Min(25)
+	@Max(36)
 	private int maxSeats;
 	
 	@NotNull

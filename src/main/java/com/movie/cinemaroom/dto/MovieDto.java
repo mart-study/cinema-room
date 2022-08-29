@@ -4,16 +4,23 @@ import java.util.Date;
 import java.util.Objects;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+@Validated
 public class MovieDto {
 
 	private String id;
 	
 	@NotBlank(message = "Movie title is empty.")
+	@Size(min = 1, max = 100)
 	private String title;
 	
+	@NotNull
 	private int runTime;
 	
 	@NotBlank(message = "Movie rating is empty.")
@@ -22,9 +29,11 @@ public class MovieDto {
 	@NotBlank(message = "Movie production company is empty.")
 	private String productionCompany;
 	
+	@NotNull
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date startDate;
 	
+	@NotNull
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 	

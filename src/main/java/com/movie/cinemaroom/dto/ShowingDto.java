@@ -2,12 +2,25 @@ package com.movie.cinemaroom.dto;
 
 import java.util.Objects;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.annotation.Validated;
+
 import com.movie.cinemaroom.model.Movie;
 
+@Validated
 public class ShowingDto {
 
 	private String showingId;
+	
+	@NotNull
 	private long startTime;
+	
+	@NotNull
+	@Min(10)
+	@Max(36)
 	private int numSeats;
 	private Movie movie;
 	private boolean active;
