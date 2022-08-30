@@ -10,7 +10,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,10 +31,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.movie.cinemaroom.dto.MovieDto;
 import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.dto.ShowingDto;
 import com.movie.cinemaroom.exception.ShowingNotFoundException;
+import com.movie.cinemaroom.model.Movie;
 import com.movie.cinemaroom.model.Showing;
+import com.movie.cinemaroom.repository.MovieRepository;
 import com.movie.cinemaroom.repository.ShowingRepository;
 import com.movie.cinemaroom.service.impl.ShowingServiceImpl;
 
@@ -44,6 +49,9 @@ public class ShowingServiceTest {
 	
 	@Mock
 	private ShowingRepository showingRepository = Mockito.mock(ShowingRepository.class);
+	
+	@Mock
+	private MovieRepository movieRepository = Mockito.mock(MovieRepository.class);
 	
 	@InjectMocks
 	private ShowingServiceImpl showingService;
@@ -57,6 +65,18 @@ public class ShowingServiceTest {
 		this.showingDto = new ShowingDto(10000, 10);
 		this.showingDto.setShowingId("90d48880-j1f1-4bc2-9e2f-a32cda343c08");
 		this.showing = modelMapper.map(showingDto, Showing.class);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = formatter.parse("2022-06-29");
+		Date endDate = formatter.parse("2022-08-29");
+		MovieDto movieDto = new MovieDto("Minions: The Rise of Gru", 87, "SU", 
+				"Illumination entertainment", startDate, endDate);
+		movieDto.setId("48d48865-e1f1-4bc2-9e2f-a32cda343c08");
+		this.showingDto.setMovie(movieDto);
+		
+		Movie movie = modelMapper.map(movieDto, Movie.class);
+		Optional<Movie> movieOpt = Optional.of(movie);
+		when(movieRepository.findById("48d48865-e1f1-4bc2-9e2f-a32cda343c08")).thenReturn(movieOpt);
 		
 		Optional<Showing> showingOpt = Optional.of(this.showing);
 		when(showingRepository.findById("90d48880-j1f1-4bc2-9e2f-a32cda343c08")).thenReturn(showingOpt);

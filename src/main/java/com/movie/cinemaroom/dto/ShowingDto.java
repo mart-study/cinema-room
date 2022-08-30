@@ -8,8 +8,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
 
-import com.movie.cinemaroom.model.Movie;
-
 @Validated
 public class ShowingDto {
 
@@ -22,7 +20,7 @@ public class ShowingDto {
 	@Min(10)
 	@Max(36)
 	private int numSeats;
-	private Movie movie;
+	private MovieDto movie;
 	private boolean active;
 	
 	public ShowingDto() {
@@ -53,12 +51,14 @@ public class ShowingDto {
 	public void setNumSeats(int numSeats) {
 		this.numSeats = numSeats;
 	}
-	public Movie getMovie() {
+	public MovieDto getMovie() {
 		return movie;
 	}
-	public void setMovie(Movie movie) {
+
+	public void setMovie(MovieDto movie) {
 		this.movie = movie;
 	}
+
 	public boolean isActive() {
 		return active;
 	}

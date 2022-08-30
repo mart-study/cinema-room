@@ -32,9 +32,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.movie.cinemaroom.dto.CinemaDto;
 import com.movie.cinemaroom.dto.PagingResultDto;
+import com.movie.cinemaroom.dto.ShowingDto;
 import com.movie.cinemaroom.exception.CinemaNotFoundException;
 import com.movie.cinemaroom.model.Cinema;
+import com.movie.cinemaroom.model.Showing;
 import com.movie.cinemaroom.repository.CinemaRepository;
+import com.movie.cinemaroom.repository.ShowingRepository;
 import com.movie.cinemaroom.service.impl.CinemaServiceImpl;
 
 @ExtendWith(SpringExtension.class)
@@ -46,6 +49,9 @@ public class CinemaServiceTest {
 	@Mock
 	private CinemaRepository cinemaRepository = Mockito.mock(CinemaRepository.class);
 	
+	@Mock
+	private ShowingRepository showingRepository = Mockito.mock(ShowingRepository.class);
+	
 	@InjectMocks
 	private CinemaServiceImpl cinemaService;
 	
@@ -55,8 +61,16 @@ public class CinemaServiceTest {
 	@BeforeEach
 	@DisplayName("Setup mocks for test")
 	void before() throws ParseException {
+		ShowingDto showingDto = new ShowingDto(10000, 10);
+		showingDto.setShowingId("90d48880-j1f1-4bc2-9e2f-a32cda343c08");
+		Showing showing = modelMapper.map(showingDto, Showing.class);
+		
+		Optional<Showing> showingOpt = Optional.of(showing);
+		when(showingRepository.findById("90d48880-j1f1-4bc2-9e2f-a32cda343c08")).thenReturn(showingOpt);
+		
 		this.cinemaDto = new CinemaDto(25, 20, new HashSet<>());
 		this.cinemaDto.setScreenId("b0dfed29-46db-4930-a68a-e9449aff9e37");
+		this.cinemaDto.getShowings().add(showingDto);
 		this.cinema = modelMapper.map(this.cinemaDto, Cinema.class);
 		when(cinemaRepository.save(any())).thenReturn(this.cinema);
 		

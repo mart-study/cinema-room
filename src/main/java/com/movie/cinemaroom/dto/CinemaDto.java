@@ -9,8 +9,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
 
-import com.movie.cinemaroom.model.Showing;
-
 @Validated
 public class CinemaDto {
 
@@ -23,14 +21,14 @@ public class CinemaDto {
 	
 	@NotNull
 	private int sreenSize;
-	private Set<Showing> showings;
+	private Set<ShowingDto> showings;
 	private boolean active;
 	
 	public CinemaDto() {
 		
 	}
 
-	public CinemaDto(int maxSeats, int sreenSize, Set<Showing> showings) {
+	public CinemaDto(int maxSeats, int sreenSize, Set<ShowingDto> showings) {
 		this.maxSeats = maxSeats;
 		this.sreenSize = sreenSize;
 		this.showings = showings;
@@ -61,11 +59,11 @@ public class CinemaDto {
 		this.sreenSize = sreenSize;
 	}
 
-	public Set<Showing> getShowings() {
+	public Set<ShowingDto> getShowings() {
 		return showings;
 	}
 
-	public void setShowings(Set<Showing> showings) {
+	public void setShowings(Set<ShowingDto> showings) {
 		this.showings = showings;
 	}
 
