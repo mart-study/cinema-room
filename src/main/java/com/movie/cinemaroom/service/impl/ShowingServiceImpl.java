@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.dto.ShowingDto;
+import com.movie.cinemaroom.exception.RequirementNotCompleteException;
 import com.movie.cinemaroom.exception.ShowingNotFoundException;
+import com.movie.cinemaroom.model.Movie;
 import com.movie.cinemaroom.model.Showing;
+import com.movie.cinemaroom.repository.MovieRepository;
 import com.movie.cinemaroom.repository.ShowingRepository;
 import com.movie.cinemaroom.service.ShowingService;
 
@@ -25,10 +28,31 @@ public class ShowingServiceImpl implements ShowingService {
 	private ShowingRepository showingRepository;
 	
 	@Autowired
+	private MovieRepository movieRepository;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 	
 	@Override
 	public ShowingDto save(ShowingDto showingDto) {
+		if (showingDto.getMovie() == null) {
+			throw new RequirementNotCompleteException("Showing need to have a movie.");
+		} 
+		
+		if (showingDto.getMovie().getId() == null) {
+			throw new RequirementNotCompleteException("Showing need to have a movie.");
+		}
+		
+		if (showingDto.getMovie().getId().isBlank()) {
+			throw new RequirementNotCompleteException("Showing need to have a movie.");
+		}
+		
+		Optional<Movie> movieOpt = movieRepository.findById(showingDto.getMovie().getId());
+		if (movieOpt.isEmpty()) {
+			throw new RequirementNotCompleteException("Movie with id: " + showingDto.getMovie().getId() 
+					+ " is not existed.");
+		}
+		
 		Showing showing = modelMapper.map(showingDto, Showing.class);
 		showing.setActive(true);
 		showing = showingRepository.save(showing);

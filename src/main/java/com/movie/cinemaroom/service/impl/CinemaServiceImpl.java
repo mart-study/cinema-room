@@ -14,8 +14,11 @@ import org.springframework.stereotype.Service;
 import com.movie.cinemaroom.dto.CinemaDto;
 import com.movie.cinemaroom.dto.PagingResultDto;
 import com.movie.cinemaroom.exception.CinemaNotFoundException;
+import com.movie.cinemaroom.exception.RequirementNotCompleteException;
 import com.movie.cinemaroom.model.Cinema;
+import com.movie.cinemaroom.model.Showing;
 import com.movie.cinemaroom.repository.CinemaRepository;
+import com.movie.cinemaroom.repository.ShowingRepository;
 import com.movie.cinemaroom.service.CinemaService;
 
 @Service
@@ -25,10 +28,37 @@ public class CinemaServiceImpl implements CinemaService {
 	private CinemaRepository cinemaRepository;
 	
 	@Autowired
+	private ShowingRepository showingRepository;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
 	public CinemaDto save(CinemaDto cinemaDto) {
+		if (cinemaDto.getShowings() == null) {
+			throw new RequirementNotCompleteException("Cinema need to have a minimum one of Showing.");
+		}
+		
+		if (cinemaDto.getShowings().isEmpty()) {
+			throw new RequirementNotCompleteException("Cinema need to have a minimum one of Showing.");
+		}
+		
+		cinemaDto.getShowings().forEach(showing -> {
+			if (showing.getShowingId() == null) {
+				throw new RequirementNotCompleteException("Cinema need to have a minimum one of Showing.");
+			}
+			
+			if (showing.getShowingId().isBlank()) {
+				throw new RequirementNotCompleteException("Cinema need to have a minimum one of Showing.");
+			}
+			
+			Optional<Showing> showingOpt = showingRepository.findById(showing.getShowingId());
+			if (showingOpt.isEmpty()) {
+				throw new RequirementNotCompleteException("Showing with id: " + showing.getShowingId() 
+					+ " is not existed.");
+			}
+		});
+		
 		Cinema cinema = modelMapper.map(cinemaDto, Cinema.class);
 		cinema.setActive(true);
 		cinemaRepository.save(cinema);

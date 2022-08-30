@@ -28,4 +28,10 @@ public class RestExceptionHandler {
 		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(RequirementNotCompleteException.class)
+	public ResponseEntity<ErrorMessage> handleRequirementExceptions(RequirementNotCompleteException exception) {
+		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+	}
+	
 }
